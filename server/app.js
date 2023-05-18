@@ -3,6 +3,9 @@ const fs = require('fs');
 const app = express();
 const jsonFilePath = './data.json';
 const bodyParser = require('body-parser');
+//cors problem
+const cors = require('cors');
+app.use(cors());
 
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -22,7 +25,11 @@ const writeDataToFile = (data) => {
 // GET endpoint to fetch data
 app.get('/api/data', (req, res) => {
   const data = readDataFromFile();
-  res.json(data);
+  if(data.length) {
+    res.json({data, success: true});
+  } else {
+    res.status(404).json({ message: 'Not found', success: false });
+  }
 });
 
 // POST endpoint to add data
