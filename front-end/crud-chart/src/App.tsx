@@ -3,7 +3,7 @@ import './App.css';
 import TableComponent from "./components/table";
 import {Button} from "antd";
 import {useStore} from "./store";
-import {getData} from "./services/api/api";
+import {getData, postData} from "./services/api/api";
 import {columnsData} from "./utils/columns";
 import ModalForm from "./components/modal/modal";
 
@@ -38,7 +38,7 @@ function App() {
 
     return (
         <>
-            <ModalForm  handleCancel={handleCancel} handleOk={handleOk}  isModalOpen={isModalOpen} />
+            <ModalForm postData={postData} handleCancel={handleCancel} handleOk={handleOk}  isModalOpen={isModalOpen} />
             <div className="parent">
                 <Button onClick={showModal} type={"primary"}>დამატება</Button>
                 <div className={'table-parent'}>

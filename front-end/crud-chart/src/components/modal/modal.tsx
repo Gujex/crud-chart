@@ -1,29 +1,18 @@
 import React from 'react';
-
+import {ModalFormProps, FormData} from "../../types/modal-types";
 import {Form, Input, Select, Button, Modal} from 'antd';
 
 const {Option} = Select;
 
-interface ModalFormProps {
-    handleCancel: () => void;
-    handleOk: () => void;
-    isModalOpen: boolean;
-}
 
-interface FormData {
-    name: string;
-    email: string;
-    gender: string;
-    address: {
-        street: string;
-        city: string;
-    };
-    phone: string;
-}
 
-const ModalForm: React.FC<ModalFormProps> = ({handleCancel, handleOk, isModalOpen}) => {
+const ModalForm: React.FC<ModalFormProps> = ({handleCancel, handleOk, isModalOpen, postData}) => {
+
     const onFinish = (values: FormData) => {
-        console.log('Form values:', values);
+        console.log(JSON.stringify({ id: "71", ...values}))
+        postData("http://localhost:3005/api/data", {...values, id: "71"}).then((res:any) => {
+            console.log(res)
+        })
     };
     return (
         <>
