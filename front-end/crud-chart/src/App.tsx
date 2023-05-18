@@ -1,53 +1,29 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import './App.css';
 import TableComponent from "./components/table";
 import {Button} from "antd";
 import {useStore} from "./store";
 import {getData} from "./services/api/api";
-import {DeleteOutlined, EditOutlined} from "@ant-design/icons";
+import {columnsData} from "./utils/columns";
+import ModalForm from "./components/modal/modal";
 
-const columns = [
-    {
-        title: 'name',
-        dataIndex: 'name',
-        key: 'name',
-    },
-    {
-        title: 'gender',
-        dataIndex: 'gender',
-        key: 'age',
-    },
-    {
-        title: 'phone',
-        dataIndex: 'phone',
-        key: 'phone',
-    },
-    {
-        title: 'email',
-        dataIndex: 'email',
-        key: 'email',
-    },
-    {
-        title: 'address',
-        dataIndex: 'address',
-        key: 'address',
-        render: (info: any) => {
-            const {city, street} = info
-            return <div onClick={() => console.log(info)}>{`${city}, ${street}`}</div>
-        }
-    },
-    {
-        title: 'operate',
-        key: 'operate',
-        render: () => {
-            return <div><DeleteOutlined/> <EditOutlined/></div>
-        }
-    },
-]
 
 function App() {
     const setInitialData = useStore((state) => state.setInitialData);
     const data = useStore((state) => state.data);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const showModal = ()=> {
+        setIsModalOpen(true);
+    };
+
+    const handleOk = () => {
+        setIsModalOpen(false);
+    };
+
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
     useEffect(() => {
         getData("http://localhost:3005/api/data").then((res: any) => {
             if (res.success) {
@@ -59,13 +35,17 @@ function App() {
             console.log('error', er)
         })
     }, [])
+
     return (
-        <div className="parent">
-            <Button onClick={() => console.log(data)} type={"primary"}>დამატება</Button>
-            <div className={'table-parent'}>
-                <TableComponent dataSource={data} columns={columns}/>
+        <>
+            <ModalForm  handleCancel={handleCancel} handleOk={handleOk}  isModalOpen={isModalOpen} />
+            <div className="parent">
+                <Button onClick={showModal} type={"primary"}>დამატება</Button>
+                <div className={'table-parent'}>
+                    <TableComponent dataSource={data} columns={columnsData}/>
+                </div>
             </div>
-        </div>
+        </>
     );
 }
 
