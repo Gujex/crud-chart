@@ -28,10 +28,24 @@ app.get('/api/data', (req, res) => {
 // POST endpoint to add data
 app.post('/api/data', (req, res) => {
   const data = readDataFromFile();
-  console.log('req', req.body);
   data.push(req.body);
   writeDataToFile(data);
   res.json({ message: 'Data added successfully.' });
+})
+
+// Delete endpoint to delete data
+app.delete('/api/data/:id', (req, res) => {
+  console.log(req.params.id);
+  const data = readDataFromFile();
+  const newData = data.filter((item) => {
+    return +item.id !== +req.params.id
+  });
+  writeDataToFile(newData);
+  if(data.length === newData.length) {
+    res.status(404).json({ message: 'Not found' });
+  } else {
+    res.json({ message: 'Data deleted successfully.' });
+  }
 })
 
 app.listen(3005, () => {
