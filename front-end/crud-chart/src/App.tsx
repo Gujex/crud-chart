@@ -4,7 +4,7 @@ import TableComponent from "./components/table";
 import {Button} from "antd";
 import {useStore} from "./store";
 import {getData} from "./services/api/api";
-
+import {DeleteOutlined, EditOutlined} from "@ant-design/icons";
 
 const columns = [
     {
@@ -35,12 +35,19 @@ const columns = [
             const {city, street} = info
             return <div onClick={() => console.log(info)}>{`${city}, ${street}`}</div>
         }
-    }]
+    },
+    {
+        title: 'operate',
+        key: 'operate',
+        render: () => {
+            return <div><DeleteOutlined/> <EditOutlined/></div>
+        }
+    },
+]
 
 function App() {
     const setInitialData = useStore((state) => state.setInitialData);
     const data = useStore((state) => state.data);
-
     useEffect(() => {
         getData("http://localhost:3005/api/data").then((res: any) => {
             if (res.success) {
