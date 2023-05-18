@@ -1,11 +1,43 @@
 import React from 'react';
 import './App.css';
-import {getData} from "./services/api/api";
+// import {getData} from "./services/api/api";
+import TableComponent from "./components/table";
+const dataSource = [
+    {
+        key: '1',
+        name: 'Mike',
+        age: 32,
+        address: '10 Downing Street',
+    },
+    {
+        key: '2',
+        name: 'John',
+        age: 42,
+        address: '10 Downing Street',
+    },
+];
+
+const columns = [
+    {
+        title: 'Name',
+        dataIndex: 'name',
+        key: 'name',
+    },
+    {
+        title: 'Age',
+        dataIndex: 'age',
+        key: 'age',
+    },
+    {
+        title: 'Address',
+        dataIndex: 'address',
+        key: 'address',
+    },
+];
 function App() {
   return (
     <div className="App">
-      hello
-        <div onClick={() => getData("http://localhost:3005/api/data")}>click</div>
+        <TableComponent dataSource={dataSource} columns={columns} />
     </div>
   );
 }
