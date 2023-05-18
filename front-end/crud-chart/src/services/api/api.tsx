@@ -2,7 +2,7 @@ import axios from "axios";
 
 //get data from api
 export const getData = async (url: string) => {
-    axios
+    return axios
         .get(url)
         .then((res) => {
             return res.data
