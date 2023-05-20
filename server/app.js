@@ -1,82 +1,82 @@
-const express = require('express');
-const fs = require('fs');
+const express = require("express");
+const fs = require("fs");
 const app = express();
-const jsonFilePath = './data.json';
-const bodyParser = require('body-parser');
-const cors = require('cors');
+const jsonFilePath = "./data.json";
+const bodyParser = require("body-parser");
+const cors = require("cors");
 app.use(cors());
-const port = 3005
-app.use(bodyParser.urlencoded({extended: false}));
+const port = 3005;
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // Read JSON file
 const readDataFromFile = () => {
   return new Promise((resolve, reject) => {
-    fs.readFile(jsonFilePath, 'utf8', (err, data) => {
+    fs.readFile(jsonFilePath, "utf8", (err, data) => {
       if (err) {
         reject(err);
       } else {
         resolve(JSON.parse(data));
       }
-    })
-  })
+    });
+  });
 };
 
 // Write JSON file
 const writeDataToFile = (data) => {
   return new Promise((resolve, reject) => {
-    fs.writeFile(jsonFilePath, JSON.stringify(data, null, 2), 'utf8', (err) => {
+    fs.writeFile(jsonFilePath, JSON.stringify(data, null, 2), "utf8", (err) => {
       if (err) {
         reject(err);
       } else {
         resolve();
       }
-    })
-  })
+    });
+  });
 };
 
 // GET endpoint to fetch data
-app.get('/api/data', async (req, res) => {
+app.get("/api/data", async (req, res) => {
   const data = await readDataFromFile();
   if (data.length) {
-    res.json({data, success: true});
+    res.json({ data, success: true });
   } else {
-    res.status(404).json({message: 'Not found', success: false});
+    res.status(404).json({ message: "Not found", success: false });
   }
 });
 
 // POST endpoint to add data
-app.post('/api/data', async (req, res) => {
+app.post("/api/data", async (req, res) => {
   const data = await readDataFromFile();
   data.push(req.body);
-  await writeDataToFile(data)
+  await writeDataToFile(data);
   if (data.length) {
-    res.json({message: 'Data added successfully.', success: true});
+    res.json({ message: "Data added successfully.", success: true });
   } else {
-    res.status(404).json({message: 'Not found', success: false});
+    res.status(404).json({ message: "Not found", success: false });
   }
-})
+});
 
 // Delete endpoint to delete data
-app.delete('/api/data/:id', async (req, res) => {
+app.delete("/api/data/:id", async (req, res) => {
   const data = await readDataFromFile();
   const newData = data.filter((item) => {
-    return +item.id !== +req.params.id
+    return +item.id !== +req.params.id;
   });
   await writeDataToFile(newData).then(() => {
-    res.json({message: 'Data deleted successfully.', success: true})
-  })
-})
+    res.json({ message: "Data deleted successfully.", success: true });
+  });
+});
 
 // PUT endpoint to update data
-app.put('/api/data/:id', async (req, res) => {
-  const data =await readDataFromFile();
+app.put("/api/data/:id", async (req, res) => {
+  const data = await readDataFromFile();
   const index = data.findIndex((item) => +item.id === +req.params.id);
   data[index] = req.body;
   await writeDataToFile(data).then(() => {
-    res.json({message: 'Data updated successfully.', success: true})
-  })
-})
+    res.json({ message: "Data updated successfully.", success: true });
+  });
+});
 
 app.listen(port, () => {
   console.log(`Server started on port ${port}`);
