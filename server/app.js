@@ -61,12 +61,11 @@ app.delete('/api/data/:id', (req, res) => {
 // PUT endpoint to update data
 app.put('/api/data/:id', (req, res) => {
   const data = readDataFromFile();
-  const newData = data.map((item) => {
-    if(+item.id === +req.params.id) {
-      item = req.body;
-    }
-  })
-  writeDataToFile(newData);
+  const index = data.findIndex((item) => +item.id === +req.params.id);
+  console.log(req.body)
+  data[index] = req.body;
+  writeDataToFile(data);
+  res.json({ message: 'Data updated successfully.', success: true })
 })
 
 app.listen(3005, () => {

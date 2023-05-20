@@ -11,22 +11,28 @@ export const ModalForm: React.FC<ModalFormProps> = ({ handleCancel, handleOk, is
 
     // Math random is not a good idea for id, but for this example it's ok
     const onFinish = (values: FormData) => {
-        postData("http://localhost:3005/api/data", {id: Math.random(), ...values }).then((res:any) => {
-            if (res.success) {
-                notification['success']({
-                    message: 'მოქმედება წარმატებით განხორციელდა',
-                    duration: 2,
-                });
-                handleOk()
-                handleGettingData()
-            }else {
-                notification['error']({
-                    message: 'მოქმედება ვერ განხორციელდა',
-                    description: "data.message",
-                    duration: 2,
-                });
-            }
-        })
+        if(editData) {
+            // postData("http://localhost:3005/api/data", {id: editData.id, ...values }).then((res:any) => {
+            //     console.log(res)
+            // })
+            return
+        }
+            postData("http://localhost:3005/api/data", {id: Math.random(), ...values }).then((res:any) => {
+                if (res.success) {
+                    notification['success']({
+                        message: 'მოქმედება წარმატებით განხორციელდა',
+                        duration: 2,
+                    });
+                    handleOk()
+                    handleGettingData()
+                }else {
+                    notification['error']({
+                        message: 'მოქმედება ვერ განხორციელდა',
+                        description: "data.message",
+                        duration: 2,
+                    });
+                }
+            })
     };
     const [form] = Form.useForm();
 
