@@ -1,4 +1,4 @@
-import create from 'zustand';
+import {create} from 'zustand';
 import {customFormData} from "./types/modal-types";
 
 type store = {

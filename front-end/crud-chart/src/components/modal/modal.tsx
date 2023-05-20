@@ -41,7 +41,6 @@ export const ModalForm: React.FC<ModalFormProps> = ({
             return
         }
         postData({id: Math.random(), ...values}).then((res: any) => {
-            console.log(res)
             if (res.success) {
                 notification['success']({
                     message: 'მოქმედება წარმატებით განხორციელდა',
@@ -117,7 +116,7 @@ export const ModalForm: React.FC<ModalFormProps> = ({
                             },
                         ]}
                     >
-                        <Select popupMatchSelectWidth >
+                        <Select  >
                             <Option key="male" value="male">Male</Option>
                             <Option key="female" value="female">Female</Option>
                         </Select>

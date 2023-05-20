@@ -45,6 +45,10 @@ function App() {
     const handleGettingData = () => {
         getData().then((res: {data: Array<customFormData>, success: boolean} ) => {
             if (res.success) {
+                res.data.forEach((el:any) => {
+                    el.key = el.id
+                })
+                //key added for antd table
                 setInitialData(res.data)
             } else {
                 notification['error']({

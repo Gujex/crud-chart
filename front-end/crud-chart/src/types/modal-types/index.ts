@@ -11,6 +11,7 @@ export interface customFormData {
     name: string;
     email: string;
     gender: string;
+    key?: string;
     address: {
         street: string;
         city: string;

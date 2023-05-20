@@ -4,11 +4,13 @@ import { ColumnsType } from 'antd/es/table';
 
 
 type props = {
-    dataSource: Array<customFormData>,
+    // dataSource: Array<customFormData>,
+    dataSource: any,
     columns: ColumnsType<customFormData>
 }
+
 const TableComponent = ({dataSource, columns}:props) => {
-    return <Table dataSource={dataSource} columns={columns} />;
+    return <Table  dataSource={dataSource} columns={columns} />;
 }
 
 export default TableComponent;

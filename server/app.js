@@ -84,5 +84,5 @@ app.put('/api/data/:id', async (req, res) => {
 })
 
 app.listen(3005, () => {
-  console.log('Server started on port 3000');
+  console.log('Server started on port 3005');
 });
