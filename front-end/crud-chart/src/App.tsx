@@ -45,7 +45,6 @@ function App() {
     const handleGettingData = () => {
         getData().then((res: {data: Array<customFormData>, success: boolean} ) => {
             if (res.success) {
-
                 setInitialData(res.data)
             } else {
                 notification['error']({
@@ -83,6 +82,7 @@ function App() {
     const citiesData = Object.entries(cityCounts).map(([city, count]) => ({
         type: city,
         value: (count / totalPeople) * 100,
+
     }));
 
     const confirmModal = (title: string, content: string, id: number): void => {

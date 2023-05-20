@@ -28,7 +28,7 @@ export const columnDataGenerator = (getEditData: any, confirmModal: any) => {
             title: 'address',
             dataIndex: 'address',
             key: 'address',
-            render: (info: any) => {
+            render: (info: {city: string, street: string}) => {
                 // const {city, street} = info
                 return <div onClick={() => console.log(info)}>{`${info?.city}, ${info?.street}`}</div>
             }
@@ -36,7 +36,7 @@ export const columnDataGenerator = (getEditData: any, confirmModal: any) => {
         {
             title: 'operate',
             key: 'operate',
-            render: (info: any) => {
+            render: (info: {id: number}) => {
                 return <div><Button
                     onClick={() => confirmModal('Delete Item', 'Are you sure you want to delete this item?', info.id)}
                     type={'text'}><DeleteOutlined/></Button> <Button onClick={() => getEditData(info)}

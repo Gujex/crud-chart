@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, {AxiosResponse} from "axios";
 //config urls
 const port = 3005
 const mainUrl = `http://localhost:${port}/api/data/`
@@ -6,7 +6,7 @@ const mainUrl = `http://localhost:${port}/api/data/`
 export const getData = async () => {
     return axios
         .get(mainUrl)
-        .then((res) => {
+        .then((res:AxiosResponse) => {
             return res.data
         })
         .catch((err) => {
@@ -17,7 +17,7 @@ export const getData = async () => {
 export const postData = async ( data: any) => {
 return axios
         .post(mainUrl, data)
-        .then((res) => {
+        .then((res:AxiosResponse) => {
             return res.data
         })
         .catch((err) => {
@@ -29,7 +29,7 @@ return axios
 export const deleteData = async ( id: number) => {
     return axios
         .delete(mainUrl + id)
-        .then((res) => {
+        .then((res :AxiosResponse) => {
             return res.data
         })
         .catch((err) => {
@@ -41,7 +41,7 @@ export const deleteData = async ( id: number) => {
 export const updateData = async ( data: any) => {
     return axios
         .put(mainUrl + data.id, data)
-        .then((res) => {
+        .then((res: AxiosResponse) => {
             return res.data
         })
         .catch((err) => {

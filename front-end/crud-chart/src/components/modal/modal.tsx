@@ -52,6 +52,8 @@ export const ModalForm: React.FC<ModalFormProps> = ({ handleCancel, handleOk, is
     };
     const [form] = Form.useForm();
 
+
+
     useEffect(() => {
         if (editData) {
             form.setFieldsValue({ ...editData });
@@ -60,14 +62,14 @@ export const ModalForm: React.FC<ModalFormProps> = ({ handleCancel, handleOk, is
         }
     }, [editData, form]);
 
+
     return (
         <>
-            <Modal  footer={[]}  title={`${editData ? 'Edit item' : 'Add item'}`} open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+            <Modal footer={[]}  title={`${editData ? 'Edit item' : 'Add item'}`} open={isModalOpen} onOk={handleOk} onCancel={handleCancel} forceRender>
                 <Form
                     layout={'vertical'}
                     onFinish={onFinish}
                     form={form}
-                    // initialValues={{name: editData ? editData.name : ''}}
                 >
                     <Form.Item
                         label="Name"
