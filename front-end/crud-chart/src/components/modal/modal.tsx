@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {ModalFormProps, FormData} from "../../types/modal-types";
 import {Form, Input, Select, Button, Modal, notification} from 'antd';
 
@@ -6,7 +6,7 @@ const {Option} = Select;
 
 
 
-const ModalForm: React.FC<ModalFormProps> = ({handleCancel, handleOk, isModalOpen, postData, handleGettingData}) => {
+export const ModalForm: React.FC<ModalFormProps> = ({ handleCancel, handleOk, isModalOpen, postData, handleGettingData,  editData }) => {
 
 
     // Math random is not a good idea for id, but for this example it's ok
@@ -28,14 +28,26 @@ const ModalForm: React.FC<ModalFormProps> = ({handleCancel, handleOk, isModalOpe
             }
         })
     };
+    const [form] = Form.useForm();
+
+    useEffect(() => {
+        if (editData) {
+            form.setFieldsValue({ ...editData });
+        } else {
+            form.resetFields();
+        }
+    }, [editData, form]);
 
     return (
         <>
-            <Modal footer={[]}  title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+            <Modal  footer={[]}  title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+                <div onClick={()=>console.log(editData)}>asdasd</div>
                 <Form
                     layout={'vertical'}
                     onFinish={onFinish}
-                    initialValues={{gender: 'female'}}>
+                    form={form}
+                    // initialValues={{name: editData ? editData.name : ''}}
+                >
                     <Form.Item
                         label="Name"
                         name="name"
@@ -134,4 +146,4 @@ const ModalForm: React.FC<ModalFormProps> = ({handleCancel, handleOk, isModalOpe
     );
 };
 
-export default ModalForm;
+

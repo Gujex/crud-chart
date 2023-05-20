@@ -1,10 +1,13 @@
 export interface ModalFormProps {
-    handleCancel: () => void;
-    handleOk: () => void;
-    isModalOpen: boolean;
-    postData: (url: string, data: FormData) => any;
-    handleGettingData: () => void;
-
+    handleCancel: () => void,
+    handleOk: () => void,
+    isModalOpen: boolean,
+    postData: (url: string, data: FormData) => any,
+    handleGettingData: () => void,
+    // editData: () => void | null,
+    // editData: any,
+    //editData edit Data === FormData or null
+    editData: any
 }
 
 export interface FormData {

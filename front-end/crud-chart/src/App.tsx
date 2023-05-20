@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import './App.css';
 import TableComponent from "./components/table";
-import {Button, notification} from "antd";
+import {Button, Modal, notification} from "antd";
 import {useStore} from "./store";
 import {getData, postData} from "./services/api/api";
-import {columnsData} from "./utils/columns";
-import ModalForm from "./components/modal/modal";
+import {columnDataGenerator} from "./utils/columns";
+import {ModalForm} from "./components/modal/modal";
+
 
 
 
@@ -13,6 +14,7 @@ function App() {
     const setInitialData = useStore((state) => state.setInitialData);
     const data = useStore((state) => state.data);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [editData, setEditData] = useState<FormData | null>(null);
     const showModal = ()=> {
         setIsModalOpen(true);
     };
@@ -23,6 +25,7 @@ function App() {
 
     const handleCancel = () => {
         setIsModalOpen(false);
+        setEditData(null)
     };
     const handleGettingData = () => {
         getData("http://localhost:3005/api/data").then((res: any) => {
@@ -45,20 +48,21 @@ function App() {
         handleGettingData()
     }, [])
 
+    const getEditData = (data: FormData):void => {
+        setEditData(data)
+        showModal()
+    }
+
+console.log(editData)
+    const tableColumns =  columnDataGenerator(getEditData)
+
     return (
         <>
-            <div onClick={() => {
-                notification['success']({
-                    message: 'მოქმედება წარმატებით განხორციელდა',
-                    description: "data.message",
-                    duration: 2,
-                });
-            }}>asdasdasd</div>
-            <ModalForm postData={postData} handleCancel={handleCancel} handleOk={handleOk} handleGettingData={handleGettingData}  isModalOpen={isModalOpen} />
+            <ModalForm editData={editData} postData={postData} handleCancel={handleCancel} handleOk={handleOk} handleGettingData={handleGettingData}  isModalOpen={isModalOpen} />
             <div className="parent">
                 <Button onClick={showModal} type={"primary"}>დამატება</Button>
                 <div className={'table-parent'}>
-                    <TableComponent dataSource={data} columns={columnsData}/>
+                    <TableComponent dataSource={data} columns={tableColumns}/>
                 </div>
             </div>
         </>
