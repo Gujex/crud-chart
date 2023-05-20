@@ -35,3 +35,15 @@ export const deleteData = async (url: string, id: number) => {
         });
 }
 
+//update data from api
+export const updateData = async (url: string, data: any) => {
+    return axios
+        .put(url, data)
+        .then((res) => {
+            return res.data
+        })
+        .catch((err) => {
+            return err
+        })
+}
+

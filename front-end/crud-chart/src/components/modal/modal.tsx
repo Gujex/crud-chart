@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
 import {ModalFormProps, FormData} from "../../types/modal-types";
 import {Form, Input, Select, Button, Modal, notification} from 'antd';
+import {updateData} from "../../services/api/api";
 
 const {Option} = Select;
 
@@ -12,9 +13,26 @@ export const ModalForm: React.FC<ModalFormProps> = ({ handleCancel, handleOk, is
     // Math random is not a good idea for id, but for this example it's ok
     const onFinish = (values: FormData) => {
         if(editData) {
-            // postData("http://localhost:3005/api/data", {id: editData.id, ...values }).then((res:any) => {
-            //     console.log(res)
-            // })
+            updateData(`http://localhost:3005/api/data/${editData.id}`, {id: editData.id, ...values }).then((res:any) => {
+                if(res.success) {
+                    notification['success']({
+                        message: res.message,
+                        duration: 2,
+                    });
+                    handleOk()
+                    handleGettingData()
+                } else {
+                    notification['error']({
+                        message: res.message,
+                        duration: 2,
+                    });
+                }
+            }).catch((err:any) => {
+                notification['error']({
+                    message: err.message,
+                    duration: 2,
+                });
+            })
             return
         }
             postData("http://localhost:3005/api/data", {id: Math.random(), ...values }).then((res:any) => {
@@ -46,8 +64,7 @@ export const ModalForm: React.FC<ModalFormProps> = ({ handleCancel, handleOk, is
 
     return (
         <>
-            <Modal  footer={[]}  title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-                <div onClick={()=>console.log(editData)}>asdasd</div>
+            <Modal  footer={[]}  title={`${editData ? 'Edit item' : 'Add item'}`} open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
                 <Form
                     layout={'vertical'}
                     onFinish={onFinish}
