@@ -3,6 +3,7 @@ import './App.css';
 import TableComponent from "./components/table";
 import {Button, Modal, notification, Tabs} from "antd";
 import type { TabsProps } from 'antd';
+import {customFormData} from "./types/modal-types";
 import {useStore} from "./store";
 import {getData, postData, deleteData} from "./services/api/api";
 import {columnDataGenerator} from "./utils/columns";
@@ -26,7 +27,7 @@ function App() {
     const setInitialData = useStore((state) => state.setInitialData);
     const data = useStore((state) => state.data);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [editData, setEditData] = useState<FormData | null>(null);
+    const [editData, setEditData] = useState<customFormData | null>(null);
     const [activeTab, setActiveTab] = useState('1');
 
     const showModal = () => {
@@ -62,9 +63,11 @@ function App() {
         handleGettingData()
     }, [])
 
-    const getEditData = (data: FormData): void => {
-        setEditData(data)
-        showModal()
+    const getEditData = (data: customFormData): void => {
+        if(data) {
+            setEditData(data)
+            showModal()
+        }
     }
 
     // Aggregate the data and calculate the percentages by city
@@ -113,7 +116,6 @@ function App() {
     const onChange = (key: string) => {
         setActiveTab(key)
     };
-
     return (
         <>
             <Tabs centered defaultActiveKey="1" items={items} onChange={onChange} />

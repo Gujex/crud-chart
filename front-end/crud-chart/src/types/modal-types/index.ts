@@ -2,15 +2,12 @@ export interface ModalFormProps {
     handleCancel: () => void,
     handleOk: () => void,
     isModalOpen: boolean,
-    postData: ( data: FormData) => any,
+    postData: ( data: customFormData) => Promise<nonDataPromiseType>
     handleGettingData: () => void,
-    // editData: () => void | null,
-    // editData: any,
-    //editData edit Data === FormData or null
-    editData: any
+    editData?: customFormData | null
 }
 
-export interface FormData {
+export interface customFormData {
     name: string;
     email: string;
     gender: string;
@@ -21,3 +18,4 @@ export interface FormData {
     phone: string;
     id?: number;
 }
+export type nonDataPromiseType = {message: string, success: boolean}

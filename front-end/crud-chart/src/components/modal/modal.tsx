@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {ModalFormProps, FormData} from "../../types/modal-types";
+import {ModalFormProps, customFormData} from "../../types/modal-types";
 import {Form, Input, Select, Button, Modal, notification} from 'antd';
 import {updateData} from "../../services/api/api";
 
@@ -11,9 +11,9 @@ export const ModalForm: React.FC<ModalFormProps> = ({ handleCancel, handleOk, is
 
 
     // Math random is not a good idea for id, but for this example it's ok
-    const onFinish = (values: FormData) => {
+    const onFinish = (values: customFormData) => {
         if(editData) {
-            updateData( {id: editData.id, ...values }).then((res:any) => {
+            updateData( {id: editData.id, ...values }).then((res: {message: string, success: boolean}) => {
                 if(res.success) {
                     notification['success']({
                         message: res.message,
@@ -36,6 +36,7 @@ export const ModalForm: React.FC<ModalFormProps> = ({ handleCancel, handleOk, is
             return
         }
             postData({id: Math.random(), ...values }).then((res:any) => {
+                console.log(res)
                 if (res.success) {
                     notification['success']({
                         message: 'მოქმედება წარმატებით განხორციელდა',
