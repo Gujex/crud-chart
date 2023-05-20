@@ -7,7 +7,6 @@ type props = {
     dataSource: Array<customFormData>,
     columns: ColumnsType<customFormData>
 }
-
 const TableComponent = ({dataSource, columns}:props) => {
     return <Table dataSource={dataSource} columns={columns} />;
 }

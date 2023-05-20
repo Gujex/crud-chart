@@ -2,16 +2,24 @@ import React, {useEffect} from 'react';
 import {ModalFormProps, customFormData} from "../../types/modal-types";
 import {Form, Input, Select, Button, Modal, notification} from 'antd';
 import {updateData} from "../../services/api/api";
+
 const {Option} = Select;
 
-export const ModalForm: React.FC<ModalFormProps> = ({ handleCancel, handleOk, isModalOpen, postData, handleGettingData,  editData }) => {
+export const ModalForm: React.FC<ModalFormProps> = ({
+                                                        handleCancel,
+                                                        handleOk,
+                                                        isModalOpen,
+                                                        postData,
+                                                        handleGettingData,
+                                                        editData
+                                                    }) => {
 
 
     //I know that  Math random isn't a good idea for id, but for this example it's ok
     const onFinish = (values: customFormData) => {
-        if(editData) {
-            updateData( {id: editData.id, ...values }).then((res: {message: string, success: boolean}) => {
-                if(res.success) {
+        if (editData) {
+            updateData({id: editData.id, ...values}).then((res: { message: string, success: boolean }) => {
+                if (res.success) {
                     notification['success']({
                         message: res.message,
                         duration: 2,
@@ -24,7 +32,7 @@ export const ModalForm: React.FC<ModalFormProps> = ({ handleCancel, handleOk, is
                         duration: 2,
                     });
                 }
-            }).catch((err:any) => {
+            }).catch((err: any) => {
                 notification['error']({
                     message: err.message,
                     duration: 2,
@@ -32,31 +40,30 @@ export const ModalForm: React.FC<ModalFormProps> = ({ handleCancel, handleOk, is
             })
             return
         }
-            postData({id: Math.random(), ...values }).then((res:any) => {
-                console.log(res)
-                if (res.success) {
-                    notification['success']({
-                        message: 'მოქმედება წარმატებით განხორციელდა',
-                        duration: 2,
-                    });
-                    handleOk()
-                    handleGettingData()
-                }else {
-                    notification['error']({
-                        message: 'მოქმედება ვერ განხორციელდა',
-                        description: "data.message",
-                        duration: 2,
-                    });
-                }
-            })
+        postData({id: Math.random(), ...values}).then((res: any) => {
+            console.log(res)
+            if (res.success) {
+                notification['success']({
+                    message: 'მოქმედება წარმატებით განხორციელდა',
+                    duration: 2,
+                });
+                handleOk()
+                handleGettingData()
+            } else {
+                notification['error']({
+                    message: 'მოქმედება ვერ განხორციელდა',
+                    description: "data.message",
+                    duration: 2,
+                });
+            }
+        })
     };
     const [form] = Form.useForm();
 
 
-
     useEffect(() => {
         if (editData) {
-            form.setFieldsValue({ ...editData });
+            form.setFieldsValue({...editData});
         } else {
             form.resetFields();
         }
@@ -65,7 +72,8 @@ export const ModalForm: React.FC<ModalFormProps> = ({ handleCancel, handleOk, is
 
     return (
         <>
-            <Modal footer={[]}  title={`${editData ? 'Edit item' : 'Add item'}`} open={isModalOpen} onOk={handleOk} onCancel={handleCancel} forceRender>
+            <Modal footer={[]} title={`${editData ? 'Edit item' : 'Add item'}`} open={isModalOpen} onOk={handleOk}
+                   onCancel={handleCancel} forceRender>
                 <Form
                     layout={'vertical'}
                     onFinish={onFinish}
@@ -99,7 +107,6 @@ export const ModalForm: React.FC<ModalFormProps> = ({ handleCancel, handleOk, is
                     >
                         <Input/>
                     </Form.Item>
-
                     <Form.Item
                         label="Gender"
                         name="gender"
@@ -110,12 +117,11 @@ export const ModalForm: React.FC<ModalFormProps> = ({ handleCancel, handleOk, is
                             },
                         ]}
                     >
-                        <Select>
-                            <Option value="male">Male</Option>
-                            <Option value="female">Female</Option>
+                        <Select popupMatchSelectWidth >
+                            <Option key="male" value="male">Male</Option>
+                            <Option key="female" value="female">Female</Option>
                         </Select>
                     </Form.Item>
-
                     <Form.Item
                         label="Street"
                         name={['address', 'street']}
