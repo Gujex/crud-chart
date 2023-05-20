@@ -1,9 +1,11 @@
 import axios from "axios";
-
+//config urls
+const port = 3005
+const mainUrl = `http://localhost:${port}/api/data/`
 //get data from api
-export const getData = async (url: string) => {
+export const getData = async () => {
     return axios
-        .get(url)
+        .get(mainUrl)
         .then((res) => {
             return res.data
         })
@@ -12,9 +14,9 @@ export const getData = async (url: string) => {
         });
 }
 //post data to api
-export const postData = async (url: string, data: any) => {
+export const postData = async ( data: any) => {
 return axios
-        .post(url, data)
+        .post(mainUrl, data)
         .then((res) => {
             return res.data
         })
@@ -24,9 +26,9 @@ return axios
 }
 
 //delete data from api
-export const deleteData = async (url: string, id: number) => {
+export const deleteData = async ( id: number) => {
     return axios
-        .delete(url + '/' + id)
+        .delete(mainUrl + id)
         .then((res) => {
             return res.data
         })
@@ -36,9 +38,9 @@ export const deleteData = async (url: string, id: number) => {
 }
 
 //update data from api
-export const updateData = async (url: string, data: any) => {
+export const updateData = async ( data: any) => {
     return axios
-        .put(url, data)
+        .put(mainUrl + data.id, data)
         .then((res) => {
             return res.data
         })

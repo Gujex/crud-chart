@@ -2,8 +2,8 @@ import {Button} from "antd";
 import {DeleteOutlined, EditOutlined} from "@ant-design/icons";
 import React from "react";
 
-export const columnDataGenerator = (getEditData:any) => {
-    return  [
+export const columnDataGenerator = (getEditData: any, confirmModal: any) => {
+    return [
         {
             title: 'name',
             dataIndex: 'name',
@@ -36,8 +36,11 @@ export const columnDataGenerator = (getEditData:any) => {
         {
             title: 'operate',
             key: 'operate',
-            render: (info:any) => {
-                return <div><Button type={'text'}><DeleteOutlined/></Button> <Button onClick={()=>getEditData(info)} type={'text'}><EditOutlined/></Button>
+            render: (info: any) => {
+                return <div><Button
+                    onClick={() => confirmModal('Delete Item', 'Are you sure you want to delete this item?', info.id)}
+                    type={'text'}><DeleteOutlined/></Button> <Button onClick={() => getEditData(info)}
+                                                                     type={'text'}><EditOutlined/></Button>
                 </div>
             }
         },
