@@ -2,15 +2,12 @@ import React, {useEffect} from 'react';
 import {ModalFormProps, customFormData} from "../../types/modal-types";
 import {Form, Input, Select, Button, Modal, notification} from 'antd';
 import {updateData} from "../../services/api/api";
-
 const {Option} = Select;
-
-
 
 export const ModalForm: React.FC<ModalFormProps> = ({ handleCancel, handleOk, isModalOpen, postData, handleGettingData,  editData }) => {
 
 
-    // Math random is not a good idea for id, but for this example it's ok
+    //I know that  Math random isn't a good idea for id, but for this example it's ok
     const onFinish = (values: customFormData) => {
         if(editData) {
             updateData( {id: editData.id, ...values }).then((res: {message: string, success: boolean}) => {

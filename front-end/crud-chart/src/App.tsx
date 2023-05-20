@@ -43,8 +43,9 @@ function App() {
         setEditData(null)
     };
     const handleGettingData = () => {
-        getData().then((res: any) => {
+        getData().then((res: {data: Array<customFormData>, success: boolean} ) => {
             if (res.success) {
+
                 setInitialData(res.data)
             } else {
                 notification['error']({
@@ -116,6 +117,7 @@ function App() {
     const onChange = (key: string) => {
         setActiveTab(key)
     };
+
     return (
         <>
             <Tabs centered defaultActiveKey="1" items={items} onChange={onChange} />

@@ -1,13 +1,12 @@
 import create from 'zustand';
-import {PersonData} from "./types/store-types";
-
+import {customFormData} from "./types/modal-types";
 
 type store = {
-    data: PersonData[];
-    setInitialData: (data: PersonData[]) => void;
+    data: customFormData[];
+    setInitialData: (data: customFormData[]) => void;
 }
 
 export const useStore = create<store>((set) => ({
     data: [],
-    setInitialData: (data: PersonData[]) => set({data}),
+    setInitialData: (data: customFormData[]) => set({data}),
 }))
