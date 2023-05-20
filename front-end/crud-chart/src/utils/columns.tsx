@@ -46,5 +46,3 @@ export const columnDataGenerator = (getEditData: any, confirmModal: any) => {
         },
     ]
 }
-
-// export const columnsData =

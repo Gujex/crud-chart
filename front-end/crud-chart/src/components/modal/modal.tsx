@@ -26,6 +26,7 @@ export const ModalForm: React.FC<ModalFormProps> = ({
                     });
                     handleOk()
                     handleGettingData()
+
                 } else {
                     notification['error']({
                         message: res.message,
@@ -85,6 +86,7 @@ export const ModalForm: React.FC<ModalFormProps> = ({
                             {
                                 required: true,
                                 message: 'Please enter your name',
+                                whitespace: true,
                             },
                         ]}
                     >
@@ -97,10 +99,12 @@ export const ModalForm: React.FC<ModalFormProps> = ({
                             {
                                 required: true,
                                 message: 'Please enter your email',
+                                whitespace: true,
                             },
                             {
                                 type: 'email',
                                 message: 'Please enter a valid email',
+                                whitespace: true,
                             },
                         ]}
                     >
@@ -116,7 +120,7 @@ export const ModalForm: React.FC<ModalFormProps> = ({
                             },
                         ]}
                     >
-                        <Select  >
+                        <Select>
                             <Option key="male" value="male">Male</Option>
                             <Option key="female" value="female">Female</Option>
                         </Select>
@@ -128,6 +132,8 @@ export const ModalForm: React.FC<ModalFormProps> = ({
                             {
                                 required: true,
                                 message: 'Please enter your street address',
+                                whitespace: true,
+
                             },
                         ]}
                     >
@@ -141,6 +147,7 @@ export const ModalForm: React.FC<ModalFormProps> = ({
                             {
                                 required: true,
                                 message: 'Please enter your city',
+                                whitespace: true,
                             },
                         ]}
                     >
@@ -154,10 +161,12 @@ export const ModalForm: React.FC<ModalFormProps> = ({
                             {
                                 required: true,
                                 message: 'Please enter your phone number',
+                                whitespace: true,
                             },
                             {
                                 pattern: /^\+\d{1,3}\s\(\d{1,3}\)\s\d{1,4}-\d{1,4}$/,
                                 message: 'Please enter a valid phone number',
+                                whitespace: true,
                             },
                         ]}
                     >
@@ -173,5 +182,3 @@ export const ModalForm: React.FC<ModalFormProps> = ({
         </>
     );
 };
-
-

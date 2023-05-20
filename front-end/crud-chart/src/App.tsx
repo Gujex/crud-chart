@@ -10,7 +10,6 @@ import {columnDataGenerator} from "./utils/columns";
 import {ModalForm} from "./components/modal/modal";
 import DemoPie from "./components/chart";
 
-
 const items: TabsProps['items'] = [
     {
         key: '1',
@@ -20,7 +19,6 @@ const items: TabsProps['items'] = [
         key: '2',
         label: `Chart`,
     },
-
 ];
 
 function App() {
@@ -36,6 +34,7 @@ function App() {
 
     const handleOk = () => {
         setIsModalOpen(false);
+        setEditData(null)
     };
 
     const handleCancel = () => {
@@ -74,19 +73,16 @@ function App() {
         }
     }
 
-    // Aggregate the data and calculate the percentages by city
+    //  calculate the percentages by city
     const cityCounts: { [city: string]: number } = {};
     data.forEach((item) => {
         const city = item.address.city;
         cityCounts[city] = (cityCounts[city] || 0) + 1;
     });
-
     const totalPeople = data.length;
-
     const citiesData = Object.entries(cityCounts).map(([city, count]) => ({
         type: city,
         value: (count / totalPeople) * 100,
-
     }));
 
     const confirmModal = (title: string, content: string, id: number): void => {

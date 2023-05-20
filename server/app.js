@@ -3,18 +3,14 @@ const fs = require('fs');
 const app = express();
 const jsonFilePath = './data.json';
 const bodyParser = require('body-parser');
-//cors problem
 const cors = require('cors');
 app.use(cors());
-
-
+const port = 3005
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
 // Read JSON file
 const readDataFromFile = () => {
-  // const jsonData = fs.readFileSync(jsonFilePath, 'utf8');
-  // return JSON.parse(jsonData);
   return new Promise((resolve, reject) => {
     fs.readFile(jsonFilePath, 'utf8', (err, data) => {
       if (err) {
@@ -28,7 +24,6 @@ const readDataFromFile = () => {
 
 // Write JSON file
 const writeDataToFile = (data) => {
-  // fs.writeFileSync(jsonFilePath, JSON.stringify(data, null, 2), 'utf8');
   return new Promise((resolve, reject) => {
     fs.writeFile(jsonFilePath, JSON.stringify(data, null, 2), 'utf8', (err) => {
       if (err) {
@@ -83,6 +78,6 @@ app.put('/api/data/:id', async (req, res) => {
   })
 })
 
-app.listen(3005, () => {
-  console.log('Server started on port 3005');
+app.listen(port, () => {
+  console.log(`Server started on port ${port}`);
 });

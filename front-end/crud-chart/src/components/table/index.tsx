@@ -13,6 +13,4 @@ const TableComponent = ({dataSource, columns}:props) => {
     return <Table  dataSource={dataSource} columns={columns} />;
 }
 
-export default TableComponent;
-
-
+export default TableComponent
