@@ -23,3 +23,15 @@ return axios
         });
 }
 
+//delete data from api
+export const deleteData = async (url: string, id: number) => {
+    return axios
+        .delete(url + '/' + id)
+        .then((res) => {
+            return res.data
+        })
+        .catch((err) => {
+            return err
+        });
+}
+

@@ -1,19 +1,34 @@
 import React from 'react';
 import {ModalFormProps, FormData} from "../../types/modal-types";
-import {Form, Input, Select, Button, Modal} from 'antd';
+import {Form, Input, Select, Button, Modal, notification} from 'antd';
 
 const {Option} = Select;
 
 
 
-const ModalForm: React.FC<ModalFormProps> = ({handleCancel, handleOk, isModalOpen, postData}) => {
+const ModalForm: React.FC<ModalFormProps> = ({handleCancel, handleOk, isModalOpen, postData, handleGettingData}) => {
 
+
+    // Math random is not a good idea for id, but for this example it's ok
     const onFinish = (values: FormData) => {
-        console.log(JSON.stringify({ id: "71", ...values}))
-        postData("http://localhost:3005/api/data", {...values, id: "71"}).then((res:any) => {
-            console.log(res)
+        postData("http://localhost:3005/api/data", {id: Math.random(), ...values }).then((res:any) => {
+            if (res.success) {
+                notification['success']({
+                    message: 'მოქმედება წარმატებით განხორციელდა',
+                    duration: 2,
+                });
+                handleOk()
+                handleGettingData()
+            }else {
+                notification['error']({
+                    message: 'მოქმედება ვერ განხორციელდა',
+                    description: "data.message",
+                    duration: 2,
+                });
+            }
         })
     };
+
     return (
         <>
             <Modal footer={[]}  title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>

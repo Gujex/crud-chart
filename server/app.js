@@ -38,9 +38,9 @@ app.post('/api/data', (req, res) => {
   data.push(req.body);
   writeDataToFile(data);
   if(data.length) {
-    res.json({ message: 'Data added successfully.' });
+    res.json({ message: 'Data added successfully.', success: true });
   } else {
-    res.status(404).json({ message: 'Not found' });
+    res.status(404).json({ message: 'Not found', success: false });
   }
 })
 
@@ -56,6 +56,17 @@ app.delete('/api/data/:id', (req, res) => {
   } else {
     res.json({ message: 'Data deleted successfully.' });
   }
+})
+
+// PUT endpoint to update data
+app.put('/api/data/:id', (req, res) => {
+  const data = readDataFromFile();
+  const newData = data.map((item) => {
+    if(+item.id === +req.params.id) {
+      item = req.body;
+    }
+  })
+  writeDataToFile(newData);
 })
 
 app.listen(3005, () => {

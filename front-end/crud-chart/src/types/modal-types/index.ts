@@ -3,6 +3,8 @@ export interface ModalFormProps {
     handleOk: () => void;
     isModalOpen: boolean;
     postData: (url: string, data: FormData) => any;
+    handleGettingData: () => void;
+
 }
 
 export interface FormData {
@@ -14,5 +16,5 @@ export interface FormData {
         city: string;
     };
     phone: string;
-    id?: string;
+    id?: number;
 }

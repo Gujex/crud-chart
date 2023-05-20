@@ -28,8 +28,8 @@ export const columnsData = [
         dataIndex: 'address',
         key: 'address',
         render: (info: any) => {
-            const {city, street} = info
-            return <div onClick={() => console.log(info)}>{`${city}, ${street}`}</div>
+            // const {city, street} = info
+            return <div onClick={() => console.log(info)}>{`${info?.city}, ${info?.street}`}</div>
         }
     },
     {
